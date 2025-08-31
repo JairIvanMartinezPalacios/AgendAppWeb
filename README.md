@@ -179,7 +179,7 @@ Este proyecto está bajo la **Licencia MIT**.
 
 **Jair Ivan Martínez Palacios** - [contacto.jairivan@gmail.com](mailto:contacto.jairivan@gmail.com)
 
-## 🙏 Agradecimientos
+## Recursos utilizados
 
 - [React](https://reactjs.org/) - Biblioteca de UI
 - [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
