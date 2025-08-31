@@ -81,17 +81,45 @@ CREATE TABLE agenda (
 
 ```
 agenda/
-├── client/                 # Frontend React
-│   ├── src/
-│   │   ├── components/    # Componentes UI
-│   │   ├── hooks/         # Hooks personalizados
-│   │   ├── utils/         # Utilidades
-│   │   └── App.js         # Componente principal
-│   └── package.json
-├── server/                 # Backend Node.js
-│   ├── config/            # Configuración DB
-│   └── index.js           # Servidor Express
-└── package.json            # Dependencias servidor
+├── client/                     # Frontend React
+│   ├── src/                    # Código fuente
+│   │   ├── components/         # Componentes React (12 archivos)
+│   │   │   ├── ContactList.js      # Lista de contactos
+│   │   │   ├── ContactForm.js      # Formulario de contacto
+│   │   │   ├── ContactDetail.js    # Vista detallada
+│   │   │   ├── Header.js           # Encabezado con navegación
+│   │   │   ├── ThemeToggle.js      # Selector de tema
+│   │   │   ├── Stats.js            # Estadísticas
+│   │   │   ├── FormField.js        # Campo de formulario
+│   │   │   ├── EmptyState.js       # Estados vacíos
+│   │   │   ├── ConfirmDialog.js    # Diálogo de confirmación
+│   │   │   ├── Toast.js            # Notificación individual
+│   │   │   ├── ToastContainer.js   # Contenedor de notificaciones
+│   │   │   └── ErrorBoundary.js    # Manejo de errores
+│   │   ├── hooks/              # Hooks personalizados (3 archivos)
+│   │   │   ├── useTheme.js         # Gestión del tema
+│   │   │   ├── useToast.js         # Sistema de notificaciones
+│   │   │   └── useConfirm.js       # Diálogos de confirmación
+│   │   ├── utils/              # Utilidades (2 archivos)
+│   │   │   ├── date.js             # Formateo de fechas
+│   │   │   └── validation.js       # Validaciones de formularios
+│   │   ├── App.js              # Componente principal
+│   │   ├── index.js            # Punto de entrada
+│   │   └── index.css           # Estilos globales
+│   ├── public/                 # Archivos públicos
+│   │   └── index.html         # HTML principal
+│   ├── tailwind.config.js     # Configuración de Tailwind CSS
+│   ├── postcss.config.js      # Configuración de PostCSS
+│   └── package.json           # Dependencias del cliente
+├── server/                     # Backend Node.js
+│   ├── config/                # Configuración
+│   │   └── database.js        # Configuración de base de datos
+│   └── index.js               # Servidor Express principal
+├── env.example                 # Ejemplo de variables de entorno
+├── env.local                   # Variables de entorno reales (en .gitignore)
+├── .gitignore                  # Configuración de Git
+├── package.json                # Dependencias del servidor
+└── README.md                   # Este archivo
 ```
 
 ## 🔧 Scripts Disponibles
