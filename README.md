@@ -21,7 +21,7 @@ Aplicación web moderna para gestionar contactos con React, Node.js, Express y M
 
 ### 1. **Clonar y Instalar**
 ```bash
-git clone <url-del-repositorio>
+git clone <https://github.com/JairIvanMartinezPalacios/AgendAppWeb>
 cd agenda
 npm run install-all
 ```
@@ -35,7 +35,7 @@ cp env.example env.local
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=tu_contraseña
-DB_NAME=agenda_db
+DB_NAME=agenda
 PORT=5000
 ```
 
