@@ -1,6 +1,6 @@
 # 📱 Sistema de Agenda de Contactos
 
-Aplicación web moderna para gestionar contactos con React, Node.js, Express y MySQL. Incluye tema claro/oscuro, validaciones en tiempo real y sistema de notificaciones.
+Aplicación web para gestionar contactos con React, Node.js, Express y MySQL. Incluye tema claro/oscuro, validaciones en tiempo real y sistema de notificaciones.
 
 ## ✨ Características
 
