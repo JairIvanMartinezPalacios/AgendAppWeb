@@ -110,6 +110,28 @@ function App() {
     return () => clearInterval(interval);
   }, [loading]);
 
+  // Efecto para manejar atajos de teclado
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // Escape para deseleccionar contacto
+      if (event.key === 'Escape' && selectedContact) {
+        handleEdit(null);
+      }
+      
+      // Ctrl/Cmd + K para enfocar la búsqueda
+      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+        event.preventDefault();
+        const searchInput = document.querySelector('input[placeholder*="Buscar"]');
+        if (searchInput) {
+          searchInput.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [selectedContact]);
+
   // ===== OPERACIONES CRUD =====
 
   /**
@@ -245,12 +267,20 @@ function App() {
   };
 
   /**
-   * Abre el formulario para editar un contacto existente
-   * @param {object} contact - Contacto a editar
+   * Abre el formulario para editar un contacto existente o deselecciona el contacto actual
+   * @param {object|null} contact - Contacto a editar, o null para deseleccionar
    */
   const handleEdit = (contact) => {
-    setEditingContact(contact);
-    setShowForm(true);
+    if (contact === null) {
+      // Si se pasa null, deseleccionar el contacto actual
+      setSelectedContact(null);
+      setShowForm(false);
+      setEditingContact(null);
+    } else {
+      // Si se pasa un contacto, editarlo
+      setEditingContact(contact);
+      setShowForm(true);
+    }
   };
 
   /**
@@ -274,10 +304,14 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
       {/* Header con botón de actualización */}
-      <Header onRefresh={refreshContacts} />
+      <Header 
+        onRefresh={refreshContacts}
+        onClearSelection={() => handleEdit(null)}
+        hasSelectedContact={!!selectedContact}
+      />
       
       {/* Contenido principal */}
-      <main className="container mx-auto px-4 py-8 pt-32">
+      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 pt-28 sm:pt-32 max-w-7xl">
         {/* Estadísticas de contactos */}
         <Stats contacts={contacts} />
         
@@ -285,7 +319,7 @@ function App() {
         <div className="flex flex-col sm:flex-row gap-6 mb-8">
           {/* Campo de búsqueda con ícono */}
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
             <input
               type="text"
               placeholder="Buscar contactos por nombre, email o teléfono..."
@@ -306,9 +340,9 @@ function App() {
         </div>
 
         {/* Contenido principal en grid responsivo */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Lista de contactos (1/3 del ancho en pantallas grandes) */}
-          <div className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8">
+          {/* Lista de contactos - Responsive: full en móvil, 5/12 en lg, 4/12 en xl para más espacio */}
+          <div className="lg:col-span-5 xl:col-span-4">
             <ContactList
               contacts={filteredContacts}
               onSelect={setSelectedContact}
@@ -321,8 +355,8 @@ function App() {
             />
           </div>
 
-          {/* Detalles del contacto o formulario (2/3 del ancho en pantallas grandes) */}
-          <div className="lg:col-span-2">
+          {/* Detalles del contacto o formulario - Responsive: full en móvil, 7/12 en lg, 8/12 en xl */}
+          <div className="lg:col-span-7 xl:col-span-8">
             {showForm ? (
               // Mostrar formulario si se está creando o editando un contacto
               <ContactForm

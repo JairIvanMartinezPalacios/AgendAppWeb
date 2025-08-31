@@ -13,15 +13,14 @@ const useTheme = () => {
   // Estado del tema actual (light, dark)
   // Se inicializa con una función que:
   // 1. Primero intenta obtener el tema guardado en localStorage
-  // 2. Si no hay tema guardado, detecta automáticamente el tema del sistema
+  // 2. Si no hay tema guardado, SIEMPRE usar tema oscuro por defecto
   const [theme, setTheme] = useState(() => {
     // Intentar obtener el tema guardado en localStorage
     const savedTheme = localStorage.getItem('theme');
     
-    // Si no hay tema guardado, usar el tema del sistema
-    // window.matchMedia('(prefers-color-scheme: dark)') detecta si el sistema prefiere tema oscuro
+    // Si no hay tema guardado, SIEMPRE usar tema oscuro
     if (!savedTheme) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      return 'dark';
     }
     
     return savedTheme;
@@ -85,8 +84,9 @@ const useTheme = () => {
   
   /**
    * Función para usar el tema del sistema operativo
+   * Siempre usa tema oscuro para mantener consistencia
    */
-  const setSystemThemeFunc = () => setTheme(systemTheme);
+  const setSystemThemeFunc = () => setTheme('dark');
 
   // Retornar el estado y las funciones para que el componente las use
   return {

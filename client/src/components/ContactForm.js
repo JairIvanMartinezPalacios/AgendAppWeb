@@ -98,17 +98,17 @@ const ContactForm = ({ contact, onSubmit, onCancel }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-8">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-soft border border-gray-100 dark:border-gray-700 p-6 sm:p-8 h-fit min-h-[500px] animate-fade-in-up">
       {/* Encabezado del formulario */}
-      <div className="flex items-center justify-between mb-8">
-        <div>
+      <div className="flex items-center justify-between mb-8 animate-slide-in-left">
+        <div className="transition-all duration-500 ease-out">
           {/* Título dinámico según si es edición o creación */}
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white transition-all duration-300 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105">
             {contact ? 'Editar Contacto' : 'Nuevo Contacto'}
           </h2>
           
           {/* Descripción dinámica según el modo */}
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-600 dark:text-gray-300 mt-1 transition-all duration-300 hover:text-gray-800 dark:hover:text-gray-200">
             {contact ? 'Modifica la información del contacto' : 'Agrega un nuevo contacto a tu agenda'}
           </p>
         </div>
@@ -116,9 +116,9 @@ const ContactForm = ({ contact, onSubmit, onCancel }) => {
         {/* Botón de cerrar/cancelar */}
         <button
           onClick={onCancel}
-          className="p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
+          className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-all duration-300 ease-out transform hover:scale-110 hover:rotate-90 hover:shadow-lg rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          <X className="w-6 h-6" />
+          <X className="w-6 h-6 transition-transform duration-300" />
         </button>
       </div>
 
@@ -186,7 +186,7 @@ const ContactForm = ({ contact, onSubmit, onCancel }) => {
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-200 hover:border-gray-400"
+            className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500"
           >
             Cancelar
           </button>

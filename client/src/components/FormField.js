@@ -35,8 +35,8 @@ const FormField = ({
 }) => {
   // Clases CSS para el input/textarea
   // Cambia el estilo según si hay error o no
-  const inputClasses = `w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 ${
-    error ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+  const inputClasses = `w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+    error ? 'border-red-300 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
   }`;
 
   /**
@@ -76,7 +76,7 @@ const FormField = ({
   return (
     <div>
       {/* Etiqueta del campo */}
-      <label htmlFor={name} className="block text-sm font-semibold text-gray-700 mb-3">
+      <label htmlFor={name} className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">
         {label} 
         {/* Indicador de campo obligatorio */}
         {required && <span className="text-red-500">*</span>}
@@ -86,7 +86,7 @@ const FormField = ({
       <div className="relative">
         {/* Ícono del campo (si se proporciona) */}
         {Icon && (
-          <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
         )}
         
         {/* Input o textarea renderizado */}
@@ -95,7 +95,7 @@ const FormField = ({
       
       {/* Mensaje de error (si existe) */}
       {error && (
-        <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
+        <p className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
           {/* Punto indicador de error */}
           <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
           {error}

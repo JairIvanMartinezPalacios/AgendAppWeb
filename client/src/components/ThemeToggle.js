@@ -40,7 +40,7 @@ const ThemeToggle = () => {
       label: 'Sistema',
       icon: Monitor,
       action: setSystemTheme,
-      description: 'Seguir preferencia del sistema'
+      description: 'Usar tema oscuro (recomendado)'
     }
   ];
 
@@ -52,15 +52,15 @@ const ThemeToggle = () => {
       {/* Botón principal que abre/cierra el menú */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 hover:shadow-md ${
+        className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-300 ease-out transform hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-gray-200/50 ${
           isDark 
             ? 'bg-gray-800 text-white hover:bg-gray-700 border border-gray-600' 
-            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+            : 'bg-gray-800 text-white hover:bg-gray-700 border border-gray-600'
         }`}
         aria-label="Cambiar tema"
       >
         {/* Ícono del tema actual */}
-        {currentTheme && <currentTheme.icon className="w-4 h-4" />}
+        {currentTheme && <currentTheme.icon className="w-4 h-4 transition-transform duration-300 hover:rotate-12" />}
         
         {/* Etiqueta del tema actual (oculta en pantallas pequeñas) */}
         <span className="hidden sm:inline text-sm font-medium">
@@ -69,8 +69,8 @@ const ThemeToggle = () => {
         
         {/* Flecha que indica si el menú está abierto */}
         <ChevronDown 
-          className={`w-4 h-4 transition-transform duration-200 ${
-            isOpen ? 'rotate-180' : ''
+          className={`w-4 h-4 transition-all duration-300 ${
+            isOpen ? 'rotate-180' : 'hover:rotate-90'
           }`} 
         />
       </button>
@@ -88,7 +88,7 @@ const ThemeToggle = () => {
           <div className={`absolute right-0 top-full mt-2 w-56 rounded-xl shadow-lg border transition-all duration-200 z-20 ${
             isDark 
               ? 'bg-gray-800 border-gray-600' 
-              : 'bg-white border-gray-200'
+              : 'bg-gray-800 border-gray-600'
           }`}>
             <div className="p-2">
               {/* Renderizar cada opción de tema */}
@@ -107,12 +107,8 @@ const ThemeToggle = () => {
                     }}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
                       isActive
-                        ? isDark
-                          ? 'bg-primary-600 text-white'
-                          : 'bg-primary-50 text-primary-700'
-                        : isDark
-                          ? 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                          : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-primary-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                     }`}
                   >
                     {/* Ícono de la opción */}
@@ -126,8 +122,8 @@ const ThemeToggle = () => {
                       {/* Descripción secundaria */}
                       <div className={`text-xs ${
                         isActive 
-                          ? isDark ? 'text-primary-200' : 'text-primary-600'
-                          : isDark ? 'text-gray-500' : 'text-gray-500'
+                          ? 'text-primary-200'
+                          : 'text-gray-500'
                       }`}>
                         {option.description}
                       </div>

@@ -106,10 +106,10 @@ const ContactList = ({
   // ===== LISTA DE CONTACTOS =====
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-0 dark:border-0 p-4 sm:p-6 h-fit min-h-[500px] min-w-0">
       {/* Encabezado de la lista */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white transition-all duration-500 ease-out transform hover:scale-105 hover:text-primary-600 dark:hover:text-primary-400">
           Contactos ({contacts.length})
         </h2>
         
@@ -117,7 +117,7 @@ const ContactList = ({
         {searchTerm && (
           <button
             onClick={onClearSearch}
-            className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
+            className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium self-start sm:self-auto transition-all duration-300 ease-out transform hover:scale-105 hover:-translate-y-0.5 hover:shadow-md px-3 py-1.5 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20"
           >
             Limpiar
           </button>
@@ -125,87 +125,102 @@ const ContactList = ({
       </div>
       
       {/* Instrucciones para el usuario */}
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-        Selecciona un contacto para ver los detalles
-      </p>
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 transition-all duration-500 ease-out hover:text-gray-800 dark:hover:text-gray-200 hover:translate-x-1">
+          Selecciona un contacto para ver los detalles
+        </p>
+        
+        {/* Botón para deseleccionar contacto actual */}
+        {selectedId && (
+          <button
+            onClick={() => onEdit(null)}
+            className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-300 ease-out transform hover:scale-105 hover:-translate-y-0.5 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Limpiar selección
+          </button>
+        )}
+      </div>
 
       {/* Lista de contactos con scroll */}
-      <div className="space-y-3 max-h-96 overflow-y-auto">
+      <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-450px)] lg:max-h-[600px] overflow-y-auto">
         {visibleContacts.map((contact, index) => (
-          <div
-            key={contact.id}
-            className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ease-out transform ${
-              selectedId === contact.id
-                ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-md'
-                : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-sm'
-            } ${
-              isVisible 
-                ? 'opacity-100 translate-x-0' 
-                : 'opacity-0 -translate-x-8'
-            }`}
-            style={{ transitionDelay: `${index * 50}ms` }}
-            onClick={() => onSelect(contact)}
-          >
-            <div className="flex items-start justify-between">
-              {/* Información del contacto */}
-              <div className="flex-1">
-                {/* Nombre del contacto */}
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                  {contact.name}
-                </h3>
-                
-                {/* Detalles del contacto (email, teléfono, dirección) */}
-                <div className="space-y-2">
-                  {/* Email (solo si existe) */}
-                  {contact.email && (
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                      <Mail className="w-4 h-4" />
-                      <span className="truncate">{contact.email}</span>
-                    </div>
-                  )}
+                      <div
+              key={contact.id}
+              className={`group p-4 sm:p-5 rounded-xl border border-gray-200 dark:border-gray-600 cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] transform hover:scale-[1.02] hover:-translate-y-1 ${
+                selectedId === contact.id
+                  ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 shadow-xl ring-2 ring-primary-500/30 scale-[1.02] -translate-y-1'
+                  : 'hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50'
+              } ${
+                isVisible 
+                  ? 'opacity-100 translate-x-0 rotate-0' 
+                  : 'opacity-0 -translate-x-12 -rotate-3'
+              }`}
+              style={{ 
+                transitionDelay: `${index * 75}ms`,
+                animation: isVisible ? 'slideInFromLeft 0.6s ease-out forwards' : 'none'
+              }}
+              onClick={() => onSelect(contact)}
+            >
+              <div className="flex items-start justify-between gap-4">
+                {/* Información del contacto */}
+                <div className="flex-1 min-w-0 pr-3">
+                  {/* Nombre del contacto */}
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-3 break-words leading-tight transition-all duration-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-1">
+                    {contact.name}
+                  </h3>
                   
-                  {/* Teléfono (solo si existe) */}
-                  {contact.phone && (
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                      <Phone className="w-4 h-4" />
-                      <span>{contact.phone}</span>
-                    </div>
-                  )}
-                  
-                  {/* Dirección (solo si existe) */}
-                  {contact.address && (
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                      <MapPin className="w-4 h-4" />
-                      <span className="truncate">{contact.address}</span>
-                    </div>
-                  )}
+                  {/* Detalles del contacto (email, teléfono, dirección) */}
+                  <div className="space-y-2.5">
+                    {/* Email (solo si existe) */}
+                    {contact.email && (
+                      <div className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                        <Mail className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-gray-400 dark:text-gray-500 mt-0.5 transition-all duration-300 group-hover:text-primary-500 dark:group-hover:text-primary-400 group-hover:scale-110" />
+                        <span className="break-words leading-relaxed flex-1 transition-all duration-300 group-hover:translate-x-1">{contact.email}</span>
+                      </div>
+                    )}
+                    
+                    {/* Teléfono (solo si existe) */}
+                    {contact.phone && (
+                      <div className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                        <Phone className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-gray-400 dark:text-gray-500 mt-0.5 transition-all duration-300 group-hover:text-green-500 dark:group-hover:text-green-400 group-hover:scale-110" />
+                        <span className="break-words leading-relaxed flex-1 transition-all duration-300 group-hover:translate-x-1">{contact.phone}</span>
+                      </div>
+                    )}
+                    
+                    {/* Dirección (solo si existe) */}
+                    {contact.address && (
+                      <div className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                        <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 text-gray-400 dark:text-gray-500 mt-0.5 transition-all duration-300 group-hover:text-purple-500 dark:group-hover:text-purple-400 group-hover:scale-110" />
+                        <span className="break-words leading-relaxed flex-1 transition-all duration-300 group-hover:translate-x-1">{contact.address}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-              
-              {/* Botones de acción (editar y eliminar) */}
-              <div className="flex items-center gap-2 ml-4">
-                {/* Botón de editar */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); // Evitar que se seleccione el contacto
-                    onEdit(contact);
-                  }}
-                  className="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200"
-                >
-                  <Edit className="w-4 h-4" />
-                </button>
                 
-                {/* Botón de eliminar */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); // Evitar que se seleccione el contacto
-                    onDelete(contact.id);
-                  }}
-                  className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
+                {/* Botones de acción (editar y eliminar) */}
+                <div className="flex items-center gap-1.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out transform translate-y-2 group-hover:translate-y-0">
+                  {/* Botón de editar */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Evitar que se seleccione el contacto
+                      onEdit(contact);
+                    }}
+                    className="p-1.5 sm:p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all duration-300 ease-out transform hover:scale-110 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary-200/50 dark:hover:shadow-primary-900/50"
+                  >
+                    <Edit className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-12" />
+                  </button>
+                  
+                  {/* Botón de eliminar */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Evitar que se seleccione el contacto
+                      onDelete(contact.id);
+                    }}
+                    className="p-1.5 sm:p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-300 ease-out transform hover:scale-110 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-200/50 dark:hover:shadow-red-900/50"
+                  >
+                    <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:rotate-12" />
+                  </button>
+                </div>
             </div>
           </div>
         ))}
